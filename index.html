@@ -3,172 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newstify 365 - Holiday Quiz</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-
+    <title>Christmas Elf Quiz - Newstify 365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- 1. PHẦN CẤU HÌNH GIAO DIỆN (CSS) --- */
         :root {
-            --primary-red: #ff4757;       /* Màu đỏ nút bấm */
-            --stripe-red: #ff6b81;        /* Màu đỏ sọc kẻ trên đầu */
-            --bg-pink: #fff0f3;           /* Màu nền hồng nhạt */
-            --card-white: #ffffff;
-            --text-dark: #2f3542;
-            --mission-bg: #fff9c4;        /* Màu nền hộp nhiệm vụ vàng nhạt */
-            --mission-border: #fbc531;
+            --primary-pink: #fdf2f2;
+            --accent-red: #ff4d4d;
+            --accent-blue: #5c67f2;
+            --text-dark: #333;
+            --white: #ffffff;
         }
+
+        * { box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--bg-pink);
-            /* Tạo họa tiết chấm bi (Polka dots) cho nền */
-            background-image: radial-gradient(#ffccd5 15%, transparent 16%);
-            background-size: 20px 20px;
+            background-color: var(--primary-pink);
             margin: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            color: var(--text-dark);
         }
 
-        /* Thanh sọc kẹo (Candy Cane Header) */
-        header {
+        /* Festive Banner Background */
+        .page-wrapper {
             width: 100%;
+            max-width: 900px;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .festive-header {
             height: 60px;
             background: repeating-linear-gradient(
                 45deg,
-                var(--primary-red),
-                var(--primary-red) 20px,
-                #ffffff 20px,
-                #ffffff 40px
+                var(--accent-red),
+                var(--accent-red) 20px,
+                var(--white) 20px,
+                var(--white) 40px
             );
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 10;
+            border-bottom: 2px solid #eee;
         }
 
-        /* Huy hiệu Logo ở giữa Header */
-        .logo-badge {
-            background: white;
-            padding: 5px 20px;
-            border-radius: 50px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 900;
-            color: var(--primary-red);
-            font-size: 1.1rem;
-        }
-
-        /* Khung chứa chính (Container) */
         .container {
-            flex: 1;
+            padding: 40px 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
         }
 
-        /* Thẻ bài (Card) trung tâm */
-        .card {
-            background: var(--card-white);
-            width: 100%;
-            max-width: 500px;
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.15);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Start Screen */
+        .screen { display: none; text-align: center; width: 100%; max-width: 500px; }
+        .screen.active { display: block; animation: fadeIn 0.5s ease; }
 
-        /* Ảnh minh họa */
-        .hero-image {
-            width: 80%;
-            max-width: 300px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            color: var(--primary-red);
-            font-weight: 900;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
-
-        p {
-            font-size: 1rem;
-            color: #57606f;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        /* Hộp nhiệm vụ (Mission Box) */
-        .mission-box {
-            background: var(--mission-bg);
-            border-left: 5px solid var(--mission-border);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: left;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
-
-        .mission-title {
-            font-weight: 800;
-            color: #e1b12c;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        /* Nút bấm chính (Button) */
+        h1 { color: var(--accent-red); margin-bottom: 10px; }
         .btn {
-            background: var(--primary-red);
+            background-color: var(--accent-blue);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            border-radius: 50px;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            transition: transform 0.2s;
+            margin-top: 20px;
             width: 100%;
         }
+        .btn:hover { transform: scale(1.03); opacity: 0.9; }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.6);
-        }
-
-        /* --- CÁC MÀN HÌNH (Ẩn/Hiện) --- */
-        .screen {
-            display: none; /* Mặc định ẩn hết */
-        }
-        
-        .screen.active {
-            display: block; /* Chỉ hiện màn hình đang active */
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Giao diện câu hỏi */
-        .question-text {
-            font-size: 1.3rem;
-            font-weight: 800;
+        /* Quiz Screen */
+        .progress-bar { color: #888; font-size: 14px; margin-bottom: 10px; }
+        .quiz-img {
+            width: 100%;
+            border-radius: 15px;
             margin-bottom: 20px;
-            color: var(--text-dark);
+            max-height: 250px;
+            object-fit: cover;
+        }
+        .question-text { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark); }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+        }
+        .option-btn {
+            background: white;
+            border: 2px solid #eee;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .option-btn:hover { border-color: var(--accent-blue); background: #f8f9ff; }
+        .option-btn.selected { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+
+        /* Feedback Area */
+        .feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: left;
+            display: none;
+        }
+        .feedback-box.correct { background: #e7f9ee; border: 1px solid #2ecc71; color: #27ae60; }
+        .feedback-box.wrong { background: #fff5f5; border: 1px solid #ff4d4d; color: #c0392b; }
+
+        /* Result Screen - ID Card Style */
+        .result-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 20px 0;
+            position: relative;
+        }
+        .badge-header { background: #ff4d4d15; color: var(--accent-red); padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-block; }
+        .elf-rank { font-size: 24px; font-weight: 700; color: var(--text-dark); margin: 15px 0 5px; }
+        .elf-mission { font-size: 14px; color: #666; line-height: 1.5; }
+        .score-circle { color: var(--accent-red); font-weight: 700; font-size: 18px; margin-top: 10px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="festive-header"></div>
+    <div class="container">
+        
+        <div id="start-screen" class="screen active">
+            <img src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=500&q=80" alt="Santa" class="quiz-img">
+            <h1>Christmas Elf Quiz</h1>
+            <p>Khám phá vị trí của bạn trong xưởng của Santa!</p>
+            <button class="btn" onclick="startQuiz()">START QUIZ</button>
+        </div>
+
+        <div id="quiz-screen" class="screen">
+            <div class="progress-bar">Question <span id="current-q">1</span>/10</div>
+            <h2 id="q-title" style="margin-top:0">Bắc Cực News</h2>
+            <img id="q-image" src="" alt="Question Image" class="quiz-img">
+            <p id="q-text" class="question-text"></p>
+            
+            <div class="options-grid" id="options-container">
+                </div>
+
+            <div id="feedback" class="feedback-box">
+                <strong id="feedback-status"></strong>
+                <p id="feedback-text" style="margin: 5px 0 0; font-size: 14px;"></p>
+                <button class="btn" id="next-btn" onclick="handleNext()">Next Story ➔</button>
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <div style="font-size: 40px;">🎉</div>
+            <h1>You Did It!</h1>
+            <p>Đây là thẻ ID chính thức của bạn tại Bắc Cực</p>
+            
+            <div class="result-card">
+                <span class="badge-header">OFFICIAL RANK</span>
+                <div class="elf-rank" id="final-rank"></div>
+                <div class="elf-mission" id="final-mission"></div>
+                <div class="score-circle">SCORE: <span id="final-score"></span>/10</div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">PLAY AGAIN</button>
+            <button class="btn" style="background: white; border: 2px solid #eee; color: #666; margin-top: 10px;">SHARE MY BADGE</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            q: "What is the name of Santa's vehicle that is pulled by reindeer?",
+            options: ["Carriage", "Sleigh", "Wagon", "Scooter"],
+            correct: 1,
+            info: "B. Sleigh (Xe trượt tuyết). Xe này không có bánh mà dùng các thanh trượt để di chuyển trên tuyết.",
+            img: "https://images.unsplash.com/photo-1512433831415-46387034c516?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "Which plant is traditionally hung over a doorway, and people kiss beneath it?",
+            options: ["Mistletoe", "Pine", "Ivy", "Holly"],
+            correct: 0,
+            info: "A. Mistletoe (Cây tầm gửi). Theo truyền thống phương Tây, nếu hai người đứng dưới nhành cây này thì phải hôn nhau.",
+            img: "https://images.unsplash.com/photo-1605553556555-520e54439f04?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "What do children usually hang by the fireplace for small gifts?",
+            options: ["Gloves", "Blankets", "Stockings", "Backpacks"],
+            correct: 2,
+            info: "C. Stockings (Tất dài). Đây là loại tất to, dài thường được treo ở ống khói để Santa bỏ quà nhỏ vào.",
+            img: "https://images.unsplash.com/photo-1544253106-96366051560f?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "A circular decoration made of branches hung on a front door is called a _______.",
+            options: ["Ring", "Garland", "Wreath", "Ornament"],
+            correct: 2,
+            info: "C. Wreath (Vòng hoa). Vòng hoa hình tròn tượng trưng cho sự vĩnh cửu và tình yêu không hồi kết.",
+            img: "https://images.unsplash.com/photo-1544473244-f6895e69ad93?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "What is the traditional Christmas drink made with milk, sugar, and whipped eggs?",
+            options: ["Eggnog", "Hot Chocolate", "Cider", "Lemonade"],
+            correct: 0,
+            info: "A. Eggnog (Thức uống trứng sữa). Một loại đồ uống béo ngậy, ngọt ngào rất phổ biến vào mùa đông.",
+            img: "https://images.unsplash.com/photo-1575405463098-43644026366e?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "Santa Claus is said to enter houses through which part of the building?",
+            options: ["Window", "Chimney", "Back door", "Balcony"],
+            correct: 1,
+            info: "B. Chimney (Ống khói). Truyền thuyết kể rằng Santa sẽ chui xuống từ đây để vào nhà.",
+            img: "https://images.unsplash.com/photo-1473654729523-203e25dfda10?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "Small, decorative items hung on a Christmas tree are known as _______.",
+            options: ["Jewelry", "Ornaments", "Stickers", "Badges"],
+            correct: 1,
+            info: "B. Ornaments (Vật trang trí). Bao gồm quả cầu, ngôi sao, chuông... dùng để treo lên cây thông.",
+            img: "https://images.unsplash.com/photo-1512474932049-78ac69ede12c?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "What are the traditional songs sung door-to-door during Christmas called?",
+            options: ["Anthems", "Carols", "Lullabies", "Ballads"],
+            correct: 1,
+            info: "B. Carols (Bài hát mừng Giáng sinh). Ví dụ như 'Jingle Bells' hay 'Silent Night'.",
+            img: "https://images.unsplash.com/photo-1575440132183-f9382f76735a?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "Santa Claus lives in a magical place called the _______.",
+            options: ["South Pole", "Ice Castle", "North Pole", "Winter Village"],
+            correct: 2,
+            info: "C. North Pole (Bắc Cực). Nơi Santa và các chú yêu tinh sinh sống và làm việc.",
+            img: "https://images.unsplash.com/photo-1543589923-78e35f7281e2?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "What is the name of the reindeer with a very shiny red nose?",
+            options: ["Dasher", "Cupid", "Rudolph", "Blitzen"],
+            correct: 2,
+            info: "C. Rudolph. Chú tuần lộc thứ 9 dẫn đường cho đoàn xe nhờ chiếc mũi đỏ phát sáng.",
+            img: "https://images.unsplash.com/photo-1481492348425-e36207865c19?auto=format&fit=crop&w=500&q=80"
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+        document.getElementById('start-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const q = quizData[currentQuestionIndex];
+        document.getElementById('current-q').innerText = currentQuestionIndex + 1;
+        document.getElementById('q-image').src = q.img;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        
+        q.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(index, btn);
+            optionsContainer.appendChild(btn);
+        });
+
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('options-container').style.pointerEvents = 'auto';
+    }
+
+    function checkAnswer(selectedIndex, btn) {
+        const q = quizData[currentQuestionIndex];
+        const feedback = document.getElementById('feedback');
+        const status = document.getElementById('feedback-status');
+        const fText = document.getElementById('feedback-text');
+        
+        document.getElementById('options-container').style.pointerEvents = 'none';
+        btn.classList.add('selected');
+
+        if (selectedIndex === q.correct) {
+            score++;
+            status.innerText = "Chính xác! 🎄";
+            feedback.className = "feedback-box correct";
+        } else {
+            status.innerText = "Chưa đúng rồi... ❄️";
+            feedback.className = "feedback-box wrong";
         }
 
-        .options
+        fText.innerText = q.info;
+        feedback.style.display = 'block';
+    }
+
+    function handleNext() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('result-screen').classList.add('active');
+        
+        let rank = "";
+        let mission = "";
+
+        if (score <= 2) {
+            rank = "Trainee Elf (Yêu tinh Thực tập)";
+            mission = "Nhiệm vụ: Bạn mới đến Bắc Cực! Công việc của bạn là dọn dẹp vụn gỗ trong xưởng đồ chơi và học cách thắt ruy băng.";
+        } else if (score <= 4) {
+            rank = "Wrapping Elf (Yêu tinh Gói quà)";
+            mission = "Nhiệm vụ: Bạn có đôi tay khéo léo. Bạn chịu trách nhiệm bọc những món quà thật đẹp và dán nhãn tên cho trẻ em khắp thế giới.";
+        } else if (score <= 6) {
+            rank = "Toy Maker Elf (Yêu tinh Làm đồ chơi)";
+            mission = "Nhiệm vụ: Một nghệ nhân thực thụ! Bạn là người trực tiếp lắp ráp búp bê, ô tô điện và các bộ xếp hình kỳ diệu.";
+        } else if (score <= 8) {
+            rank = "Reindeer Caretaker (Yêu tinh Chăm sóc Tuần lộc)";
+            mission = "Nhiệm vụ: Chức vụ quan trọng! Bạn là người cho Rudolph ăn cà rốt và kiểm tra xem bộ móng của các chú tuần lộc có đủ khỏe không.";
+        } else if (score === 9) {
+            rank = "List Manager (Quản lý Danh sách)";
+            mission = "Nhiệm vụ: Bạn nắm giữ cuốn sổ quyền lực nhất. Bạn giúp Santa kiểm tra xem ai ngoan, ai hư để phân loại quà tặng.";
+        } else {
+            rank = "Head Elf (Yêu tinh Trưởng)";
+            mission = "Nhiệm vụ: Cố vấn tối cao của Santa! Bạn quản lý toàn bộ Bắc Cực, đảm bảo mọi thứ vận hành trơn tru.";
+        }
+
+        document.getElementById('final-rank').innerText = rank;
+        document.getElementById('final-mission').innerText = mission;
+        document.getElementById('final-score').innerText = score;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newstify 365 - Holiday Quiz</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. PHẦN CẤU HÌNH GIAO DIỆN (CSS) --- */
+        :root {
+            --primary-red: #ff4757;       /* Màu đỏ nút bấm */
+            --stripe-red: #ff6b81;        /* Màu đỏ sọc kẻ trên đầu */
+            --bg-pink: #fff0f3;           /* Màu nền hồng nhạt */
+            --card-white: #ffffff;
+            --text-dark: #2f3542;
+            --mission-bg: #fff9c4;        /* Màu nền hộp nhiệm vụ vàng nhạt */
+            --mission-border: #fbc531;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-pink);
+            /* Tạo họa tiết chấm bi (Polka dots) cho nền */
+            background-image: radial-gradient(#ffccd5 15%, transparent 16%);
+            background-size: 20px 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* Thanh sọc kẹo (Candy Cane Header) */
+        header {
+            width: 100%;
+            height: 60px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--primary-red),
+                var(--primary-red) 20px,
+                #ffffff 20px,
+                #ffffff 40px
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Huy hiệu Logo ở giữa Header */
+        .logo-badge {
+            background: white;
+            padding: 5px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            color: var(--primary-red);
+            font-size: 1.1rem;
+        }
+
+        /* Khung chứa chính (Container) */
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Thẻ bài (Card) trung tâm */
+        .card {
+            background: var(--card-white);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ảnh minh họa */
+        .hero-image {
+            width: 80%;
+            max-width: 300px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-red);
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #57606f;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Hộp nhiệm vụ (Mission Box) */
+        .mission-box {
+            background: var(--mission-bg);
+            border-left: 5px solid var(--mission-border);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .mission-title {
+            font-weight: 800;
+            color: #e1b12c;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Nút bấm chính (Button) */
+        .btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.6);
+        }
+
+        /* --- CÁC MÀN HÌNH (Ẩn/Hiện) --- */
+        .screen {
+            display: none; /* Mặc định ẩn hết */
+        }
+        
+        .screen.active {
+            display: block; /* Chỉ hiện màn hình đang active */
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Giao diện câu hỏi */
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .options

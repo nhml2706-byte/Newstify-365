@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,8 +72,16 @@
             transition: transform 0.2s;
             margin-top: 20px;
             width: 100%;
+            text-decoration: none; /* For the anchor tag button */
+            display: inline-block;
         }
         .btn:hover { transform: scale(1.03); opacity: 0.9; }
+        
+        /* Specific style for the Facebook button to differentiate */
+        .btn-fb {
+            background-color: #1877F2; /* Facebook Blue */
+            margin-top: 10px;
+        }
 
         /* Quiz Screen */
         .progress-bar { color: #888; font-size: 14px; margin-bottom: 10px; }
@@ -88,10 +96,14 @@
         
         .options-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr; /* Changed to 1 column for better readability of text */
             gap: 15px;
             width: 100%;
         }
+        @media (min-width: 500px) {
+            .options-grid { grid-template-columns: 1fr 1fr; }
+        }
+
         .option-btn {
             background: white;
             border: 2px solid #eee;
@@ -142,13 +154,13 @@
         <div id="start-screen" class="screen active">
             <img src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=500&q=80" alt="Santa" class="quiz-img">
             <h1>Christmas Elf Quiz</h1>
-            <p>Khám phá vị trí của bạn trong xưởng của Santa!</p>
+            <p>Discover your role in Santa's Workshop!</p>
             <button class="btn" onclick="startQuiz()">START QUIZ</button>
         </div>
 
         <div id="quiz-screen" class="screen">
             <div class="progress-bar">Question <span id="current-q">1</span>/10</div>
-            <h2 id="q-title" style="margin-top:0">Bắc Cực News</h2>
+            <h2 id="q-title" style="margin-top:0">North Pole News</h2>
             <img id="q-image" src="" alt="Question Image" class="quiz-img">
             <p id="q-text" class="question-text"></p>
             
@@ -158,14 +170,14 @@
             <div id="feedback" class="feedback-box">
                 <strong id="feedback-status"></strong>
                 <p id="feedback-text" style="margin: 5px 0 0; font-size: 14px;"></p>
-                <button class="btn" id="next-btn" onclick="handleNext()">Next Story ➔</button>
+                <button class="btn" id="next-btn" onclick="handleNext()">Next Question ➔</button>
             </div>
         </div>
 
         <div id="result-screen" class="screen">
             <div style="font-size: 40px;">🎉</div>
             <h1>You Did It!</h1>
-            <p>Đây là thẻ ID chính thức của bạn tại Bắc Cực</p>
+            <p>Here is your official North Pole ID Card</p>
             
             <div class="result-card">
                 <span class="badge-header">OFFICIAL RANK</span>
@@ -175,7 +187,10 @@
             </div>
 
             <button class="btn" onclick="location.reload()">PLAY AGAIN</button>
-            <button class="btn" style="background: white; border: 2px solid #eee; color: #666; margin-top: 10px;">SHARE MY BADGE</button>
+            
+            <a href="https://www.facebook.com/profile.php?id=61581659500038" target="_blank" class="btn btn-fb">
+                Join Newstify 365 Family
+            </a>
         </div>
 
     </div>
@@ -184,74 +199,74 @@
 <script>
     const quizData = [
         {
-            q: "What is the name of Santa's vehicle that is pulled by reindeer?",
-            options: ["Carriage", "Sleigh", "Wagon", "Scooter"],
+            q: "What is the name of the plant that people often kiss under during Christmas?",
+            options: ["Holly", "Mistletoe", "Ivy"],
             correct: 1,
-            info: "B. Sleigh (Xe trượt tuyết). Xe này không có bánh mà dùng các thanh trượt để di chuyển trên tuyết.",
-            img: "https://images.unsplash.com/photo-1512433831415-46387034c516?auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            q: "Which plant is traditionally hung over a doorway, and people kiss beneath it?",
-            options: ["Mistletoe", "Pine", "Ivy", "Holly"],
-            correct: 0,
-            info: "A. Mistletoe (Cây tầm gửi). Theo truyền thống phương Tây, nếu hai người đứng dưới nhành cây này thì phải hôn nhau.",
+            info: "Giải thích: Mistletoe (Cây tầm gửi) là loại cây truyền thống thường được treo trên cao. Theo phong tục, nếu hai người đứng dưới nhành tầm gửi, họ phải hôn nhau.",
             img: "https://images.unsplash.com/photo-1605553556555-520e54439f04?auto=format&fit=crop&w=500&q=80"
         },
         {
-            q: "What do children usually hang by the fireplace for small gifts?",
-            options: ["Gloves", "Blankets", "Stockings", "Backpacks"],
-            correct: 2,
-            info: "C. Stockings (Tất dài). Đây là loại tất to, dài thường được treo ở ống khói để Santa bỏ quà nhỏ vào.",
-            img: "https://images.unsplash.com/photo-1544253106-96366051560f?auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            q: "A circular decoration made of branches hung on a front door is called a _______.",
-            options: ["Ring", "Garland", "Wreath", "Ornament"],
-            correct: 2,
-            info: "C. Wreath (Vòng hoa). Vòng hoa hình tròn tượng trưng cho sự vĩnh cửu và tình yêu không hồi kết.",
+            q: "Which of these is a circular decoration often hung on front doors?",
+            options: ["Wreath", "Garland", "Tinsel"],
+            correct: 0,
+            info: "Giải thích: Wreath (Vòng hoa Giáng sinh) là vòng tròn kết bằng lá thông, hoa và ruy băng, tượng trưng cho sự sống vĩnh cửu.",
             img: "https://images.unsplash.com/photo-1544473244-f6895e69ad93?auto=format&fit=crop&w=500&q=80"
         },
         {
-            q: "What is the traditional Christmas drink made with milk, sugar, and whipped eggs?",
-            options: ["Eggnog", "Hot Chocolate", "Cider", "Lemonade"],
+            q: "Santa Claus travels in a vehicle called a ________.",
+            options: ["Carriage", "Wagon", "Sleigh"],
+            correct: 2,
+            info: "Giải thích: Sleigh (Xe trượt tuyết) là phương tiện không có bánh xe, dùng để di chuyển trên tuyết, thường do tuần lộc kéo.",
+            img: "https://images.unsplash.com/photo-1512433831415-46387034c516?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "What do we call the long, shiny strips of silver or gold paper used to decorate the tree?",
+            options: ["Ornaments", "Tinsel", "Baubles"],
+            correct: 1,
+            info: "Giải thích: Tinsel (Dây kim tuyến) là những dải dây lấp lánh dùng để quấn quanh cây thông để tạo hiệu ứng rực rỡ.",
+            img: "https://images.unsplash.com/photo-1576014467946-4c927f87964e?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "Which animal pulls Santa’s sleigh?",
+            options: ["Reindeer", "Moose", "Elk"],
             correct: 0,
-            info: "A. Eggnog (Thức uống trứng sữa). Một loại đồ uống béo ngậy, ngọt ngào rất phổ biến vào mùa đông.",
+            info: "Giải thích: Reindeer (Tuần lộc) là loài vật gắn liền với hình ảnh ông già Noel, nổi tiếng nhất là chú tuần lộc mũi đỏ Rudolph.",
+            img: "https://images.unsplash.com/photo-1481492348425-e36207865c19?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            q: "What is the traditional Christmas drink made with eggs, milk, and sugar?",
+            options: ["Cider", "Eggnog", "Hot Toddy"],
+            correct: 1,
+            info: "Giải thích: Eggnog (Kem trứng) là thức uống béo ngậy, ngọt ngào rất phổ biến ở các nước phương Tây trong dịp lễ này.",
             img: "https://images.unsplash.com/photo-1575405463098-43644026366e?auto=format&fit=crop&w=500&q=80"
         },
         {
-            q: "Santa Claus is said to enter houses through which part of the building?",
-            options: ["Window", "Chimney", "Back door", "Balcony"],
-            correct: 1,
-            info: "B. Chimney (Ống khói). Truyền thuyết kể rằng Santa sẽ chui xuống từ đây để vào nhà.",
-            img: "https://images.unsplash.com/photo-1473654729523-203e25dfda10?auto=format&fit=crop&w=500&q=80"
+            q: "What do children hang by the fireplace for Santa to fill with small gifts?",
+            options: ["Stocking", "Mitten", "Boot"],
+            correct: 0,
+            info: "Giải thích: Stocking (Tất Giáng sinh) là những chiếc tất lớn được treo ở lò sưởi để ông già Noel bỏ quà hoặc kẹo vào bên trong.",
+            img: "https://images.unsplash.com/photo-1544253106-96366051560f?auto=format&fit=crop&w=500&q=80"
         },
         {
-            q: "Small, decorative items hung on a Christmas tree are known as _______.",
-            options: ["Jewelry", "Ornaments", "Stickers", "Badges"],
+            q: "Santa enters houses through the ________.",
+            options: ["Attic", "Chimney", "Basement"],
             correct: 1,
-            info: "B. Ornaments (Vật trang trí). Bao gồm quả cầu, ngôi sao, chuông... dùng để treo lên cây thông.",
-            img: "https://images.unsplash.com/photo-1512474932049-78ac69ede12c?auto=format&fit=crop&w=500&q=80"
+            info: "Giải thích: Chimney (Ống khói) là lối đi 'truyền thuyết' mà ông già Noel dùng để vào nhà tặng quà cho trẻ em.",
+            img: "https://images.unsplash.com/photo-1543336783-69024f2b1d3d?auto=format&fit=crop&w=500&q=80"
         },
         {
-            q: "What are the traditional songs sung door-to-door during Christmas called?",
-            options: ["Anthems", "Carols", "Lullabies", "Ballads"],
-            correct: 1,
-            info: "B. Carols (Bài hát mừng Giáng sinh). Ví dụ như 'Jingle Bells' hay 'Silent Night'.",
+            q: "What are the religious or festive songs sung at Christmas called?",
+            options: ["Anthems", "Lullabies", "Carols"],
+            correct: 2,
+            info: "Giải thích: Christmas Carols (Bài hát mừng Giáng sinh) là những bài hát có giai điệu vui tươi hoặc trang trọng được hát trong suốt mùa lễ hội.",
             img: "https://images.unsplash.com/photo-1575440132183-f9382f76735a?auto=format&fit=crop&w=500&q=80"
         },
         {
-            q: "Santa Claus lives in a magical place called the _______.",
-            options: ["South Pole", "Ice Castle", "North Pole", "Winter Village"],
-            correct: 2,
-            info: "C. North Pole (Bắc Cực). Nơi Santa và các chú yêu tinh sinh sống và làm việc.",
-            img: "https://images.unsplash.com/photo-1543589923-78e35f7281e2?auto=format&fit=crop&w=500&q=80"
-        },
-        {
-            q: "What is the name of the reindeer with a very shiny red nose?",
-            options: ["Dasher", "Cupid", "Rudolph", "Blitzen"],
-            correct: 2,
-            info: "C. Rudolph. Chú tuần lộc thứ 9 dẫn đường cho đoàn xe nhờ chiếc mũi đỏ phát sáng.",
-            img: "https://images.unsplash.com/photo-1481492348425-e36207865c19?auto=format&fit=crop&w=500&q=80"
+            q: "Small decorative objects (like balls or stars) hung on a Christmas tree are called ________.",
+            options: ["Ornaments", "Trinkets", "Accessories"],
+            correct: 0,
+            info: "Giải thích: Ornaments (Đồ trang trí) là danh từ chung để chỉ các vật nhỏ xinh dùng để làm đẹp cây thông như quả cầu, ngôi sao, chuông.",
+            img: "https://images.unsplash.com/photo-1512474932049-78ac69ede12c?auto=format&fit=crop&w=500&q=80"
         }
     ];
 
@@ -296,10 +311,10 @@
 
         if (selectedIndex === q.correct) {
             score++;
-            status.innerText = "Chính xác! 🎄";
+            status.innerText = "Correct! 🎄";
             feedback.className = "feedback-box correct";
         } else {
-            status.innerText = "Chưa đúng rồi... ❄️";
+            status.innerText = "Not quite right... ❄️";
             feedback.className = "feedback-box wrong";
         }
 
@@ -323,24 +338,25 @@
         let rank = "";
         let mission = "";
 
+        // Ranks translated to English as requested
         if (score <= 2) {
-            rank = "Trainee Elf (Yêu tinh Thực tập)";
-            mission = "Nhiệm vụ: Bạn mới đến Bắc Cực! Công việc của bạn là dọn dẹp vụn gỗ trong xưởng đồ chơi và học cách thắt ruy băng.";
+            rank = "Trainee Elf";
+            mission = "Mission: You are new to the North Pole! Your job is cleaning up wood shavings and learning to tie ribbons.";
         } else if (score <= 4) {
-            rank = "Wrapping Elf (Yêu tinh Gói quà)";
-            mission = "Nhiệm vụ: Bạn có đôi tay khéo léo. Bạn chịu trách nhiệm bọc những món quà thật đẹp và dán nhãn tên cho trẻ em khắp thế giới.";
+            rank = "Wrapping Elf";
+            mission = "Mission: You have skilled hands. You are responsible for wrapping gifts beautifully and labeling them for children worldwide.";
         } else if (score <= 6) {
-            rank = "Toy Maker Elf (Yêu tinh Làm đồ chơi)";
-            mission = "Nhiệm vụ: Một nghệ nhân thực thụ! Bạn là người trực tiếp lắp ráp búp bê, ô tô điện và các bộ xếp hình kỳ diệu.";
+            rank = "Toy Maker Elf";
+            mission = "Mission: A true artisan! You directly assemble dolls, electric cars, and magical puzzle sets.";
         } else if (score <= 8) {
-            rank = "Reindeer Caretaker (Yêu tinh Chăm sóc Tuần lộc)";
-            mission = "Nhiệm vụ: Chức vụ quan trọng! Bạn là người cho Rudolph ăn cà rốt và kiểm tra xem bộ móng của các chú tuần lộc có đủ khỏe không.";
+            rank = "Reindeer Caretaker";
+            mission = "Mission: Important role! You feed Rudolph carrots and check if the reindeer's hooves are strong enough for the flight.";
         } else if (score === 9) {
-            rank = "List Manager (Quản lý Danh sách)";
-            mission = "Nhiệm vụ: Bạn nắm giữ cuốn sổ quyền lực nhất. Bạn giúp Santa kiểm tra xem ai ngoan, ai hư để phân loại quà tặng.";
+            rank = "List Manager";
+            mission = "Mission: You hold the most powerful book. You help Santa check who is naughty or nice.";
         } else {
-            rank = "Head Elf (Yêu tinh Trưởng)";
-            mission = "Nhiệm vụ: Cố vấn tối cao của Santa! Bạn quản lý toàn bộ Bắc Cực, đảm bảo mọi thứ vận hành trơn tru.";
+            rank = "Head Elf";
+            mission = "Mission: Santa's Supreme Advisor! You manage the whole North Pole and ensure everything runs smoothly.";
         }
 
         document.getElementById('final-rank').innerText = rank;
